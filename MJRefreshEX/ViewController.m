@@ -57,12 +57,7 @@
     for (int i = 0; i < 10; i ++) {
         [self.listArr addObject:@(i)];
     }
-    if (isRef) {
-        [self.tableView endHeaderRefreshWithChangePageIndex:YES];
-    }
-    else{
-        [self.tableView endFooterRefreshWithChangePageIndex:YES];
-    }
+
     [self.tableView reloadData];
 }
 

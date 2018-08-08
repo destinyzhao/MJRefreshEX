@@ -21,14 +21,6 @@
 
 
 /**
- 下拉刷新成功更新
-
- @param change 是否成功
- */
-- (void)endHeaderRefreshWithChangePageIndex:(BOOL)change;
-
-
-/**
  上啦加载
 
  @param automaticallyRefresh 是否自动加载
@@ -36,13 +28,6 @@
  */
 - (void)addFooterWithWithHeaderWithAutomaticallyRefresh:(BOOL)automaticallyRefresh loadMoreBlock:(void(^)(NSInteger pageIndex))loadMoreBlock;
 
-
-/**
- 上啦加载成功更新
-
- @param change 是否成功
- */
-- (void)endFooterRefreshWithChangePageIndex:(BOOL)change;
 
 
 @end

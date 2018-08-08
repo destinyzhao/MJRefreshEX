@@ -32,10 +32,12 @@ typedef void(^LoadMoreBlock)(NSInteger pageIndex);
     self.refreshBlock = refreshBlock;
     
     MJRefreshNormalHeader * header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-         [weakSelf resetPageNum];
+        [weakSelf resetPageNum];
+    
         if (weakSelf.refreshBlock) {
             weakSelf.refreshBlock(weakSelf.pageIndex);
         }
+        [weakSelf endHeaderRefresh];
     }];
     
     if (beginRefresh && animation) {
@@ -56,9 +58,11 @@ typedef void(^LoadMoreBlock)(NSInteger pageIndex);
     
     if (automaticallyRefresh) {
         MJRefreshAutoNormalFooter * footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+             self.pageIndex += 1;
             if (self.loadMoreBlock) {
                 self.loadMoreBlock(self.pageIndex);
             }
+            [self endFooterRefresh];
         }];
         
         footer.automaticallyRefresh = automaticallyRefresh;
@@ -72,7 +76,11 @@ typedef void(^LoadMoreBlock)(NSInteger pageIndex);
     }
     else{
         MJRefreshBackNormalFooter * footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-            self.loadMoreBlock(self.pageIndex);
+             self.pageIndex += 1;
+            if (self.loadMoreBlock) {
+                self.loadMoreBlock(self.pageIndex);
+            }
+            [self endFooterRefresh];
         }];
         
         footer.stateLabel.font = [UIFont systemFontOfSize:13.0];
@@ -110,22 +118,6 @@ typedef void(^LoadMoreBlock)(NSInteger pageIndex);
     [self.mj_footer endRefreshing];
 }
 
--(void)endHeaderRefreshWithChangePageIndex:(BOOL)change {
-    
-    [self resetPageNum];
-    if (change) {
-        self.pageIndex += 1;
-    }
-    [self endHeaderRefresh];
-}
-
--(void)endFooterRefreshWithChangePageIndex:(BOOL)change {
-    
-    if (change) {
-        self.pageIndex += 1;
-    }
-    [self endFooterRefresh];
-}
 
 static void *pagaIndexKey = &pagaIndexKey;
 - (void)setPageIndex:(NSInteger)pageIndex{
