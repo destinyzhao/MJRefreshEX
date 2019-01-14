@@ -62,6 +62,7 @@ typedef void(^LoadMoreBlock)(NSInteger pageIndex);
             if (self.loadMoreBlock) {
                 self.loadMoreBlock(self.pageIndex);
             }
+//            [self endFooterRefresh]
         }];
         
         footer.automaticallyRefresh = automaticallyRefresh;
@@ -79,6 +80,7 @@ typedef void(^LoadMoreBlock)(NSInteger pageIndex);
             if (self.loadMoreBlock) {
                 self.loadMoreBlock(self.pageIndex);
             }
+//            [self endFooterRefresh]
         }];
         
         footer.stateLabel.font = [UIFont systemFontOfSize:13.0];
