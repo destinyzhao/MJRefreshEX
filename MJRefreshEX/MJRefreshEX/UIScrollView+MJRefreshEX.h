@@ -29,5 +29,15 @@
 - (void)addFooterWithWithHeaderWithAutomaticallyRefresh:(BOOL)automaticallyRefresh loadMoreBlock:(void(^)(NSInteger pageIndex))loadMoreBlock;
 
 
+/**
+ 普通请求结束刷新
+ */
+- (void)endFooterRefresh;
+
+
+/**
+ 没有数据结束刷新
+ */
+- (void)endFooterNoMoreData;
 
 @end

@@ -13,6 +13,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *listArr;
+@property (nonatomic, assign) NSInteger page;
 
 @end
 
@@ -30,13 +31,16 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
+    __weak typeof(self) weakSelf = self;
     [self.tableView addHeaderWithHeaderWithBeginRefresh:YES animation:YES refreshBlock:^(NSInteger pageIndex) {
         NSLog(@"pageIndex:%zd",pageIndex);
+        weakSelf.page = pageIndex;
         [self loadData:YES];
     }];
     
     [self.tableView addFooterWithWithHeaderWithAutomaticallyRefresh:NO loadMoreBlock:^(NSInteger pageIndex) {
         NSLog(@"pageIndex:%zd",pageIndex);
+        weakSelf.page = pageIndex;
         [self loadData:NO];
     }];
     
@@ -54,11 +58,17 @@
     if (isRef) {
         [self.listArr removeAllObjects];
     }
-    for (int i = 0; i < 10; i ++) {
-        [self.listArr addObject:@(i)];
+    
+    if (self.page < 3) {
+        for (int i = 0; i < 10; i ++) {
+            [self.listArr addObject:@(i)];
+        }
+        [self.tableView endFooterRefresh];
+         [self.tableView reloadData];
     }
-
-    [self.tableView reloadData];
+    else{
+         [self.tableView endFooterNoMoreData];
+    }
 }
 
 #pragma mark - UITableViewDelegate, UITableViewDataSource

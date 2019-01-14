@@ -82,7 +82,6 @@
 - (void)setState:(MJRefreshState)state
 {
     MJRefreshCheckState
-    
     // 根据状态做事情
     if (state == MJRefreshStateIdle) {
         if (oldState == MJRefreshStateRefreshing) {

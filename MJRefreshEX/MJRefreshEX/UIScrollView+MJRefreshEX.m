@@ -62,7 +62,6 @@ typedef void(^LoadMoreBlock)(NSInteger pageIndex);
             if (self.loadMoreBlock) {
                 self.loadMoreBlock(self.pageIndex);
             }
-            [self endFooterRefresh];
         }];
         
         footer.automaticallyRefresh = automaticallyRefresh;
@@ -70,7 +69,7 @@ typedef void(^LoadMoreBlock)(NSInteger pageIndex);
         footer.stateLabel.font = [UIFont systemFontOfSize:13.0];
         footer.stateLabel.textColor = [UIColor colorWithWhite:0.400 alpha:1.000];
         [footer setTitle:@"加载中…" forState:MJRefreshStateRefreshing];
-        [footer setTitle:@"这是我的底线啦~" forState:MJRefreshStateNoMoreData];
+        [footer setTitle:@"~~这是我的底线啦~~" forState:MJRefreshStateNoMoreData];
         
         self.mj_footer = footer;
     }
@@ -80,13 +79,12 @@ typedef void(^LoadMoreBlock)(NSInteger pageIndex);
             if (self.loadMoreBlock) {
                 self.loadMoreBlock(self.pageIndex);
             }
-            [self endFooterRefresh];
         }];
         
         footer.stateLabel.font = [UIFont systemFontOfSize:13.0];
         footer.stateLabel.textColor = [UIColor colorWithWhite:0.400 alpha:1.000];
         [footer setTitle:@"加载中…" forState:MJRefreshStateRefreshing];
-        [footer setTitle:@"这是我的底线啦~" forState:MJRefreshStateNoMoreData];
+        [footer setTitle:@"~~这是我的底线啦~~" forState:MJRefreshStateNoMoreData];
         
         self.mj_footer = footer;
     }
@@ -116,6 +114,13 @@ typedef void(^LoadMoreBlock)(NSInteger pageIndex);
 
 -(void)endFooterRefresh {
     [self.mj_footer endRefreshing];
+}
+
+- (void)endFooterNoMoreData
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.mj_footer endRefreshingWithNoMoreData];
+    });
 }
 
 
